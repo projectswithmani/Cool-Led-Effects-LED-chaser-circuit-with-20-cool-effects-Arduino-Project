@@ -1,0 +1,157 @@
+int LEDs[] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}; // Define an array to store the pin numbers of LEDs
+int numLEDs = 11; // The number of LEDs
+
+void setup() {
+  for (int i = 0; i < numLEDs; i++) {
+    pinMode(LEDs[i], OUTPUT); // Set all LED pins as output
+  }
+}
+
+void loop() {
+  allLEDsBlink(500); // Pattern 1: All LEDs blink together
+  sequentialLEDs(100); // Pattern 2: Sequentially light up LEDs
+  alternateBlink(200); // Pattern 3: Alternately blink LEDs
+  randomBlink(); // Pattern 4: Randomly blink LEDs
+  chaseLEDs(100); // Pattern 5: Chase LEDs
+  waveLEDs(100); // Pattern 6: Wave LEDs
+  crossFade(); // Pattern 7: Crossfade LEDs
+  fadeInOut(); // Pattern 8: Fade in and out LEDs
+  strobe(50); // Pattern 9: Strobe effect
+  runningLights(50); // Pattern 10: Running lights
+}
+
+// Function to blink all LEDs together
+void allLEDsBlink(int delayTime) {
+  for (int i = 0; i < numLEDs; i++) {
+    digitalWrite(LEDs[i], HIGH); // Turn on all LEDs
+  }
+  delay(delayTime); // Wait
+  for (int i = 0; i < numLEDs; i++) {
+    digitalWrite(LEDs[i], LOW); // Turn off all LEDs
+  }
+  delay(delayTime); // Wait
+}
+
+// Function to sequentially light up LEDs
+void sequentialLEDs(int delayTime) {
+  for (int i = 0; i < numLEDs; i++) {
+    digitalWrite(LEDs[i], HIGH); // Turn on the current LED
+    delay(delayTime); // Wait
+    digitalWrite(LEDs[i], LOW); // Turn off the current LED
+  }
+}
+
+// Function to alternately blink LEDs
+void alternateBlink(int delayTime) {
+  for (int i = 0; i < numLEDs; i += 2) {
+    digitalWrite(LEDs[i], HIGH);
+    delay(delayTime);
+    digitalWrite(LEDs[i], LOW);
+  }
+  delay(delayTime);
+  for (int i = 1; i < numLEDs; i += 2) {
+    digitalWrite(LEDs[i], HIGH);
+    delay(delayTime);
+    digitalWrite(LEDs[i], LOW);
+  }
+  delay(delayTime);
+}
+
+// Function to randomly blink LEDs
+void randomBlink() {
+  for (int i = 0; i < 5; i++) {
+    int randomLED = random(numLEDs);
+    digitalWrite(LEDs[randomLED], HIGH);
+    delay(100);
+    digitalWrite(LEDs[randomLED], LOW);
+    delay(100);
+  }
+}
+
+// Function to chase LEDs
+void chaseLEDs(int delayTime) {
+  for (int i = 0; i < numLEDs; i++) {
+    digitalWrite(LEDs[i], HIGH);
+    delay(delayTime);
+    digitalWrite(LEDs[i], LOW);
+  }
+  for (int i = numLEDs - 1; i >= 0; i--) {
+    digitalWrite(LEDs[i], HIGH);
+    delay(delayTime);
+    digitalWrite(LEDs[i], LOW);
+  }
+}
+
+// Function to wave LEDs
+void waveLEDs(int delayTime) {
+  for (int i = 0; i < numLEDs; i++) {
+    digitalWrite(LEDs[i], HIGH);
+    delay(delayTime);
+    digitalWrite(LEDs[i], LOW);
+  }
+  for (int i = numLEDs - 2; i > 0; i--) {
+    digitalWrite(LEDs[i], HIGH);
+    delay(delayTime);
+    digitalWrite(LEDs[i], LOW);
+  }
+}
+
+// Function to crossfade LEDs
+void crossFade() {
+  for (int i = 0; i < 256; i++) {
+    for (int j = 0; j < numLEDs; j++) {
+      analogWrite(LEDs[j], i);
+    }
+    delay(20);
+  }
+  for (int i = 255; i >= 0; i--) {
+    for (int j = 0; j < numLEDs; j++) {
+      analogWrite(LEDs[j], i);
+    }
+    delay(20);
+  }
+}
+
+// Function to fade in and out LEDs
+void fadeInOut() {
+  for (int i = 0; i < 256; i++) {
+    for (int j = 0; j < numLEDs; j++) {
+      analogWrite(LEDs[j], i);
+    }
+    delay(10);
+  }
+  for (int i = 255; i >= 0; i--) {
+    for (int j = 0; j < numLEDs; j++) {
+      analogWrite(LEDs[j], i);
+    }
+    delay(10);
+  }
+}
+
+// Function for strobe effect
+void strobe(int delayTime) {
+  for (int i = 0; i < 10; i++) {
+    for (int j = 0; j < numLEDs; j++) {
+      digitalWrite(LEDs[j], HIGH);
+    }
+    delay(delayTime);
+    for (int j = 0; j < numLEDs; j++) {
+      digitalWrite(LEDs[j], LOW);
+    }
+    delay(delayTime);
+  }
+}
+
+// Function for running lights
+void runningLights(int delayTime) {
+  for (int i = 0; i < numLEDs * 2; i++) {
+    for (int j = 0; j < numLEDs; j++) {
+      if ((j - i) % numLEDs == 0) {
+        digitalWrite(LEDs[j], HIGH);
+      } else {
+        digitalWrite(LEDs[j], LOW);
+      }
+    }
+    delay(delayTime);
+  }
+}
